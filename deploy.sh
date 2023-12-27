@@ -6,8 +6,8 @@ npm run build
 # navigate into the build output directory
 cd dist
 # if you are deploying to a custom domain
-echo 'www.sas2d.com' > CNAME
-git init
+echo 'sas2d.com' > CNAME
+git init --initial-branch=main
 git add -A
 git commit -m 'deploy'
 git push -f git@github.com:engArthurFranca/sas2d-public.git main:gh-pages
