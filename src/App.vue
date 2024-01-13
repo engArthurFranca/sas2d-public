@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <NavComponent />
 
-  <div class="container mx-auto flex-1 flex flex-col items-center justify-center overflow-y-auto">
+  <div class="container mx-auto flex-1 flex flex-col items-center justify-center">
     <router-view/>
   </div>
   
