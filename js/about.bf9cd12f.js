@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunksas2d_public"]=self["webpackChunksas2d_public"]||[]).push([[443],{9685:function(n,s,t){t.r(s),t.d(s,{default:function(){return d}});var c=t(3396);const e={class:"sas2d"};function r(n,s,t,r,u,a){const o=(0,c.up)("UnderConstruction");return(0,c.wg)(),(0,c.iD)("div",e,[(0,c.Wm)(o,{pageName:"SAS2D"})])}var u=t(4975),a=(0,c.aZ)({components:{UnderConstruction:u.Z}}),o=t(89);const i=(0,o.Z)(a,[["render",r]]);var d=i}}]);
+//# sourceMappingURL=about.bf9cd12f.js.map
