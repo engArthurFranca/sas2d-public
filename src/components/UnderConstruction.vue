@@ -1,5 +1,5 @@
 ﻿<template >
-    <div class="container mx-auto flex-1 flex flex-col items-center justify-center">
+    <div class="container mx-auto flex-1 flex flex-col items-center justify-center" style="min-height: calc(100vh - 158px)">
         <svg width="200" height="200" class="animate-spin origin-center" style="animation-duration: 3s;">
             <g id="gear" fill="gray" stroke="black" stroke-width="9">
                 <rect x="85" y="100" width="30" height="95" rx="5" ry="5" transform="rotate(0 100 100)"/>

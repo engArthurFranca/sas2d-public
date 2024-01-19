@@ -1,6 +1,6 @@
 ﻿<template>
     <!-- Navbar -->
-    <nav class=" p-4 shadow-md" style="background-color: #f3d5c0;">
+    <nav class=" p-4 shadow-md bg-blue-300">
         <div class="container mx-auto flex items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center">
@@ -10,10 +10,10 @@
 
             <!-- Menu -->
             <div class="hidden md:flex space-x-4">
-                <router-link to="/"> <a class="text-gray-800 hover:text-gray-600">Home</a> </router-link>
-                <router-link to="/sas2d"> <a class="text-gray-800 hover:text-gray-600">SAS2D</a> </router-link>
+                <router-link to="/"> <a class="text-gray-800 hover:text-gray-600 ">Home</a> </router-link>
+                <router-link to="/sas2d"> <a class="text-gray-800  hover:text-gray-600">SAS2D</a> </router-link>
                 <router-link to="/docs"> <a class="text-gray-800 hover:text-gray-600">Docs</a> </router-link>
-                <router-link to="/about"> <a class="text-gray-800 hover:text-gray-600">About</a> </router-link>
+                <router-link to="/about"> <a class="text-gray-800  hover:text-gray-600">About</a> </router-link>
             </div>
 
             <!-- Mobile Menu Button (Hidden on larger screens) -->
@@ -43,11 +43,11 @@
     </nav>
 
     <!-- Mobile Menu (Hidden on larger screens) -->
-    <div id="mobile-menu" :class="{'hidden': isActive}" style="background-color: #f3d5c0">
-        <router-link to="/"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-gray-200">Home</a> </router-link>
-        <router-link to="/sas2d"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-gray-200">SAS2D</a> </router-link>
-        <router-link to="/docs"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-gray-200">Docs</a> </router-link>
-        <router-link to="/about"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-gray-200">About</a> </router-link>
+    <div id="mobile-menu" class=" bg-blue-300" :class="{'hidden': isActive}">
+        <router-link to="/"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-blue-500">Home</a> </router-link>
+        <router-link to="/sas2d"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-blue-500">SAS2D</a> </router-link>
+        <router-link to="/docs"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-blue-500">Docs</a> </router-link>
+        <router-link to="/about"> <a class="block py-2 px-4 text-center text-gray-800 hover:bg-blue-500">About</a> </router-link>
     </div>
 </template>
 

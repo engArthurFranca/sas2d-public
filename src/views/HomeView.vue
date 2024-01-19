@@ -1,5 +1,5 @@
 <template>
-  <main class="max-w-4xl mx-auto my-8 p-8 bg-white shadow-md md:w-full">
+  <main class="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto my-8 p-8 bg-white shadow-md md:w-full" style="min-height: calc(100vh - 222px)">
     <section class="text-center">
       <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to our Structural Analysis App!</h1>
       <p class="text-gray-600 mb-4">
