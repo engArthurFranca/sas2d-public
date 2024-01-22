@@ -2,7 +2,6 @@
   <!-- Navbar -->
   <NavComponent />
 
-
   <router-view/>
   
   <!-- Footer -->

@@ -1,85 +1,75 @@
 ﻿<template>
-    <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0">
+    <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-60">
         <form>
-            <label for="website-admin" class="block mt-0 pt-2 pb-2 text-sm font-medium">Coordinates</label>
-            <div class="flex mx-2">
-                <span class="inline-flex w-8 items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                    X
-                </span>
-                <input type="number" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" v-model="point.x">
-            </div>
+            <label class="block mt-0 pt-2 pb-2 text-sm font-medium">Coordinates</label>
 
-            <div class="flex mx-2">
-                <span class="inline-flex w-8 items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                    Y
-                </span>
-                <input type="number" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" v-model="point.y">
-            </div>
-
+            <NumberInput labelClass="w-8" label="X" :value="point.x" 
+                @inputEvent="(newValue) => point.x = newValue" ></NumberInput>
+            <NumberInput labelClass="w-8" label="Y" :value="point.y" 
+                @inputEvent="(newValue) => point.y = newValue" ></NumberInput>
 
             <label for="support" class="block m-2 text-sm font-medium">Support</label>
 
-            <div class="relative inline-block text-left">
-                <button @click="selectSupport = !selectSupport" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring focus:border-blue-300 active:bg-gray-100 active:text-gray-800 transition">
-                    <svg class="h-5 w-5" viewBox="0.25 0.25 1.5 1.5" width="80" height="80" transform="scale(1,-1)">
-                    <use :href="'#support' + point.support" stroke="black" />
-                    <circle cx="1" cy="1" r="0.1"></circle>
-                    </svg>
-                </button>
+            <div class="inline-flex mb-4">
+                <SelectInput ref="selectSupport" buttonClass="w-14 h-14" optionsClass="grid grid-cols-2 gap-0 w-40">
+                    <template #buttonSlot>
+                        <svg class="h-12 w-12" viewBox="0.25 0.25 1.5 1.5" width="80" height="80" transform="scale(1,-1)">
+                            <use :href="'#support' + point.support" stroke="black" />
+                            <circle cx="1" cy="1" r="0.1"></circle>
+                            <circle v-show="point.rot" cx="1" cy="1" r="0.06" fill="white"></circle>
+                        </svg>
+                    </template>
 
-                <div id="dropdownMenu" v-show="selectSupport" class="origin-top-right absolute -right-20 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onclick="updateValue(0)">No Support</a>
-                        <div v-for="support in 9" :key="support">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onclick="updateValue(support)">
-                            <svg class="h-5 w-5" viewBox="0.25 0.25 1.5 1.5" width="80" height="80" transform="scale(1,-1)">
-                                <use :href="'#support-' + support" stroke="black" />
+                    <template #options>
+                        <a  class="block w-20 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" 
+                            @click.stop="selectOption(0)" > No Support </a>
+                        <a v-for="support in 9" :key="support" class="block w-20 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" 
+                            @click.stop="selectOption(support)"
+                        >
+                            <svg class="h-10 w-10" viewBox="0.25 0.25 1.5 1.5" width="80" height="80" transform="scale(1,-1)">
+                                <use :href="'#support' + support" stroke="black" />
                                 <circle cx="1" cy="1" r="0.1"></circle>
+                                <circle v-show="point.rot" cx="1" cy="1" r="0.06" fill="white"></circle>
                             </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </a>
+                    </template>
+                </SelectInput>
 
-            <label class="block mb-2">
-            <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="point.rot">
-            Rot
-            </label>
 
-            <label  class="block mb-2">
-                Force
-            </label>
-            <div class="flex mx-2">
-                <span class="inline-flex w-16 items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                    Value
-                </span>
-                <input type="number" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" v-model="point.y">
+                <label class="block mb-2 mt-3 cursor-pointer">
+                <input type="checkbox" id="rot" name="rot" class="mr-2  cursor-pointer" v-model="point.rot">
+                Rot
+                </label>
             </div>
-            <div class="flex mx-2">
-                <span class="inline-flex w-16 items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                    Angle
-                </span>
-                <input type="number" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" v-model="point.y">
-            </div>
+            
+            <label  class="block mb-2"> Force </label>
 
-            <label  class="block mt-2 mb-2">
-                Bend
-            </label>
-            <div class="flex mx-2">
-                <span class="inline-flex items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                    Value
-                </span>
-                <input type="number" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" v-model="point.y">
-            </div>
+            <NumberInput labelClass="w-16" label="Value" :value="point.draw_loads[0][1]" 
+                @inputEvent="(newValue) => point.draw_loads[0][1] = newValue"></NumberInput>
+            <NumberInput labelClass="w-16" label="Angle" :value="point.draw_loads[0][2]" 
+                @inputEvent="(newValue) => point.draw_loads[0][2] = newValue"></NumberInput>
 
-            <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
+            <label  class="block mt-2 mb-2"> Bend </label>
+
+            <NumberInput labelClass="w-16" label="Angle" :value="point.draw_loads[1][1]" 
+                @inputEvent="(newValue) => point.draw_loads[1][1] = newValue"></NumberInput>
+
+            <button type="button" @click="addPoint" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
         </form>
     </div>
 </template>
 
 <script>
+
+import NumberInput from "./inputs/NumberInput.vue";
+import SelectInput from "./inputs/SelectInput.vue";
+
+
 export default {
+    components: {
+        NumberInput,
+        SelectInput
+    },
     data() {
         return {
             selectSupport: false,
@@ -88,13 +78,36 @@ export default {
                 y: 0,
                 rot: false,
                 support: 0,
-                draw_loads: [[0,0,0], [0,0,0]]
+                draw_loads: [[1,0,0], [2,0,0]]
             }
         }
     },
     methods: {
-        
+
+        addPoint() {
+            this.$store.commit('addPoint', this.point);
+            this.point = {
+                x: 0,
+                y: 0,
+                rot: false,
+                support: 0,
+                draw_loads: [[1,0,0], [2,0,0]]
+            }
+            this.$refs.selectSupport.closeSelect();
+            this.$emit('close-menu')
+        },
+        selectOption(support) {
+            this.point.support = support;
+            this.$refs.selectSupport.closeSelect();
+        }
+
     },
 }
 
 </script>
+
+<style scoped>
+    .NumberInput span {
+        width: 20px;
+    }
+</style>

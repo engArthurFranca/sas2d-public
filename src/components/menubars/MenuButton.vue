@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         setValue() {
-            this.displayMenu = !this.displayMenu
+            this.displayMenu = !this.displayMenu;
             if ( this.displayMenu ) {
                 window.addEventListener('click', this.handleClick);
             }
@@ -35,7 +35,10 @@ export default {
                     window.removeEventListener('click', this.handleClick);
                 }
             }
+        },
+        closeMenu() {
+            this.displayMenu = false;
         }
-    }
+    },
 }
 </script>

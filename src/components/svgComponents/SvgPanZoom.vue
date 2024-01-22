@@ -2,9 +2,7 @@
     <svg
         class="pan-zoom-frame"
         ref="zoomFrame"
-        :style="{ transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale})` }"
-  
-        viewBox="-50 -50 200 200"
+        :style="{ transform: `translate(${offsetX}px, ${offsetY}px) scale(${scale}, -${scale})` }"
         @mousedown="startPan"
         @touchstart="startPan"
         @mousemove="handlePan"
@@ -15,13 +13,17 @@
         @wheel="handleZoom"
         @gesturestart="handleGestureStart"
         @gesturechange="handleGestureChange"
+        :viewBox="vBox"
     >
-        <slot></slot>
+        <slot @svg-loaded="handleSvgLoaded"></slot>
     </svg>
   </template>
   
   <script>
   export default {
+    props: {
+      vBox: String
+    },
     data() {
       return {
         panStartX: null,
@@ -78,7 +80,17 @@
   
         this.scale = Math.min(Math.max(this.scale * e.scale, 0.1), 3);
       },
-    },
+      handleSvgLoaded() {
+        // Método chamado quando o slot (SVG filho) é carregado
+        const svgFilho = this.$refs.zoomFrame.querySelector('svg');
+        if (svgFilho) {
+          const viewBoxFilho = svgFilho.getAttribute('viewBox');
+          console.log(viewBoxFilho)
+          // Aplicar a viewBox do SVG filho ao componente pai
+          this.$refs.zoomFrame.setAttribute('viewBox', viewBoxFilho);
+        }
+      },
+    }
   };
   </script>
   
