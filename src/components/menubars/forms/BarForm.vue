@@ -28,25 +28,29 @@
         </template>
       </SelectInput>
     </div>
-
-    <label class="block mb-2"> Rots
-      <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[0]">
-      <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[1]">
-    </label>
-
-    <label  class="block mb-2">
-      Loads
-    </label>
-
+    <div class="grid grid-cols-2 mb-3">
+      <label class="mr-4 m-auto "> Rots:</label>
+      <div class="flex items-center">
+        <input type="checkbox" id="rot" name="rot" class="float-left mr-2" v-model="bar.rot[0]">
+        <input type="checkbox" id="rot" name="rot" class="float-left" v-model="bar.rot[1]">
+      </div>
+    </div>
+    
+      
+    
     <div>
-      <div class="inline-flex items-center">
+      <label  class="block mb-2">
+        Loads
+      </label>
+
+      <div class="inline-flex items-center ml-5">
         <label class="mr-2 mb-2">Type: </label>
-        <SelectInput buttonClass="w-20 h-10" optionsClass="w-20">
+        <SelectInput buttonClass="w-36  h-10" optionsClass="w-20">
         
         </SelectInput>
       </div>
-      
-      <NumberInput label="Value" :value="bar.draw_loads[0][1]" ></NumberInput>
+        
+        <NumberInput label="Value" :value="bar.draw_loads[0][1]" ></NumberInput>
     </div>
     
 
