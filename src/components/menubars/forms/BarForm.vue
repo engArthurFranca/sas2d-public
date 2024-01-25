@@ -1,94 +1,88 @@
 ﻿<template>
-    <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-60">
-        <form>
-            <label class="block mt-0 pt-2 pb-2 text-sm font-medium">Points</label>
+  <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-60">
+    <label class="block mt-0 pt-2 pb-2 text-sm font-medium">Points</label>
 
-            <div class="inline-flex items-center mb-1" >
-              <label class="mr-2 w-20" > Inital Point: </label>
-              <SelectInput buttonClass="p-1" optionsClass="flex flex-col text-center w-20">
-                <template #buttonSlot>
-                  <a>Choose a point</a>
-                </template>
-                <template #options>
-                  <a v-for="pointIndex in 3" :key="pointIndex" class="text-gray-700 hover:bg-gray-300 cursor-pointer"> Point {{ pointIndex }}</a>
-                </template>
-              </SelectInput>
-            </div>
+    <div class="grid grid-cols-2 gap-y-0.5 items-center mb-2" >
+      <label class="mr-2 w-20 m-auto" > Inital Point: </label>
+      <SelectInput 
+        buttonClass="relative p-1" 
+        optionsClass="absolute origin-top-left top-2 left-8 border bg-white rounded flex flex-col text-center w-20">
+        <template #buttonSlot>
+          <a class="w-20">Point {{ bar.point_1 + 1 }}</a>
+        </template>
+        <template #options>
+          <a v-for="pointIndex in pointList.length" :key="pointIndex" @click="bar.point_1 = pointIndex - 1; "
+          class="w-20 text-gray-700 hover:bg-gray-300 cursor-pointer"> Point {{ pointIndex }}</a>
+        </template>
+      </SelectInput>
 
-            <div class="inline-flex items-center mb-1" >
-              <label class="mr-2 w-20" > Final Point: </label>
-              <SelectInput buttonClass="p-1" optionsClass="flex flex-col text-center w-20">
-                <template #buttonSlot>
-                  <a>Choose a point</a>
-                </template>
-                <template #options>
-                  <a v-for="pointIndex in 3" :key="pointIndex" class="text-gray-700 hover:bg-gray-300 cursor-pointer"> Point {{ pointIndex }}</a>
-                </template>
-              </SelectInput>
-            </div>
-            
-
-
-            <label class="block mb-2"> Rots
-              <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[0]">
-              <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[1]">
-            </label>
-
-            <label  class="block mb-2">
-              Loads
-            </label>
-
-            <div>
-              <div class="inline-flex items-center">
-                <label class="mr-2 mb-2">Type: </label>
-                <SelectInput buttonClass="w-20 h-10" optionsClass="w-20">
-                
-                </SelectInput>
-              </div>
-              
-              <NumberInput label="Value" :value="bar.draw_loads[0][1]" ></NumberInput>
-            </div>
-            
-
-            <button type="button" @click="addBar" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
-        </form>
+      <label class="mr-2 w-20 m-auto" > Final Point: </label>
+      <SelectInput 
+        buttonClass="relative p-1" 
+        optionsClass="absolute origin-top-left top-2 left-8 border bg-white rounded flex flex-col text-center w-20">
+        <template #buttonSlot>
+          <a class="w-20">Point {{ bar.point_2 + 1 }}</a>
+        </template>
+        <template #options>
+          <a v-for="pointIndex in pointList.length" :key="pointIndex" class="w-20 text-gray-700 hover:bg-gray-300 cursor-pointer"> Point {{ pointIndex }}</a>
+        </template>
+      </SelectInput>
     </div>
+
+    <label class="block mb-2"> Rots
+      <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[0]">
+      <input type="checkbox" id="rot" name="rot" class="mr-2" v-model="bar.rot[1]">
+    </label>
+
+    <label  class="block mb-2">
+      Loads
+    </label>
+
+    <div>
+      <div class="inline-flex items-center">
+        <label class="mr-2 mb-2">Type: </label>
+        <SelectInput buttonClass="w-20 h-10" optionsClass="w-20">
+        
+        </SelectInput>
+      </div>
+      
+      <NumberInput label="Value" :value="bar.draw_loads[0][1]" ></NumberInput>
+    </div>
+    
+
+    <button type="button" @click="addBar" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
+  </div>
 </template>
 
-<script>
+<script setup>
+  import NumberInput from "./inputs/NumberInput.vue";
+  import SelectInput from "./inputs/SelectInput.vue";
 
-import NumberInput from "./inputs/NumberInput.vue";
-import SelectInput from "./inputs/SelectInput.vue";
+  import { ref, defineEmits } from "vue";
+  import { useStore } from "vuex";
 
-export default {
+  let bar = ref({
+    point_1: 0, 
+    point_2: 1, 
+    draw_loads: [[0,0]],
+    materials: [1,1,1],
+    rot: [false, false]
+  });
 
-  components: {
-    NumberInput,
-    SelectInput
-  },
-  data() {
-    return {
-      bar: {
-        point_1: 0, 
-        point_2: 1, 
-        draw_loads: [[0,0]],
-        materials: [1,1,1],
-        rot: [false, false]
-      }
-    }
-  },
-  methods: {
-    addBar() {
-      this.$store.commit('addBar', this.bar);
-      this.point = {
-        point_1: 0, 
-        point_2: 1, 
-        draw_loads: [[0,0]],
-        materials: [1,1,1],
-        rot: [false, false]
-      } 
-      this.$emit('close-menu')
-    }
-  },
-}
+  const store = useStore();
+  const emits = defineEmits(['close-menu']);
+
+  const pointList = store.state.structure.pointList;
+
+  const addBar = () => {
+    store.commit( 'addBar', bar.value );
+    bar.value = {
+      point_1: 0, 
+      point_2: 1, 
+      draw_loads: [[0,0]],
+      materials: [1,1,1],
+      rot: [false, false]
+    };
+    emits('close-menu');
+  }
 </script>

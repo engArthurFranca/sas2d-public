@@ -51,22 +51,14 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+    import { ref } from 'vue';
 
-export default defineComponent({
-    data() {
-        return {
-            isHidden: true
-        };
-    },
-    methods: {
-        showMobileMenu: function() {
-            this.isHidden = !this.isHidden;
-        }
-    },
-    setup() {
-        
-    },
-})
+    let isHidden = ref(true);
+
+    const showMobileMenu = () => {
+        isHidden.value = !isHidden.value;
+    }
 </script>
+
+

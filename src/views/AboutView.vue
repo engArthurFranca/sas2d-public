@@ -4,14 +4,7 @@
   </div>
 </template>
 
-<script>
-  import { defineComponent } from 'vue';
+<script setup>
+import UnderConstruction from '@/components/UnderConstruction.vue';
 
-  import UnderConstruction from '@/components/UnderConstruction.vue';
-
-  export default defineComponent({
-    components: {
-      UnderConstruction
-    }
-  })
 </script>

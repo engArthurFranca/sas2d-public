@@ -19,15 +19,8 @@
         to streamline and enhance your analytical processes. Explore the possibilities today!
       </p>
       <p>
-        Open our <router-link to="/sas2d" class="text-blue-500 hover:underline focus:outline-none">Structural Analysis System 2D</router-link> now!
+        Open our <router-link to="/sas2d" class="text-blue-500 hover:underline focus:outline-none cursor-pointer">Structural Analysis System 2D</router-link> now!
       </p>
     </section>
   </main>
 </template>
-
-<style scoped>
-  a,
-  .text-blue-500 {
-    cursor: pointer;
-  }
-</style>

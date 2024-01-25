@@ -68,7 +68,7 @@
                 </template>
             </MenuButton>
 
-            <MenuButton v-show="this.$store.state.svgConfig.edit.isEditing" >
+            <MenuButton v-show="svgConfig.edit.isEditing" >
                 <template v-slot:imgSlot>
                     <div class="flex flex-col w-5">
                         <img src="../../assets/buttons/editButton.svg">
@@ -83,39 +83,22 @@
 </nav>
 </template>
 
-<script>
-import PointForm from "./forms/PointForm.vue";
-import BarForm from "./forms/BarForm.vue";
-import MenuButton from "./MenuButton.vue";
-import { useStore } from 'vuex';
-import { computed } from 'vue';
+<script setup>
+    import PointForm from "./forms/PointForm.vue";
+    import BarForm from "./forms/BarForm.vue";
+    import MenuButton from "./buttons/MenuButton.vue";
 
-export default {
-    data() {
-        return {
-            isPoint: true,
-        }
-    },
-    methods: {
-        closeEvent() {
-            //sends the event to close the menu after clicked in add button from point and bar forms
-            this.$refs.menuAdd.closeMenu();
-        }
-    },
-    setup() {
-        const store = useStore();
-        const grid = computed(() =>
-            store.state.svgConfig.grid
-        );
+    import { ref, computed} from 'vue';
+    import { useStore } from "vuex";
 
-        return {
-            grid
-        }
-    },
-    components: {
-    PointForm,
-    BarForm,
-    MenuButton
-}
-}
+
+    let isPoint = ref(true);
+    const closeEvent = () => menuAdd.value.closeMenu();
+    const menuAdd = ref(null);
+
+    const store = useStore();
+    const svgConfig = store.state.svgConfig;
+    const grid = computed(() =>
+        store.state.svgConfig.grid
+    );
 </script>

@@ -10,42 +10,27 @@
   </div>
 </template>
 
-<script>
-  import { defineComponent } from 'vue';
-
+<script setup>
   import SimpleMenuBar from '@/components/menubars/SimpleMenuBar.vue';
   import SimpleSideBar from '@/components/menubars/SimpleSideBar.vue';
   import SvgPanZoom from '@/components/svgComponents/SvgPanZoom.vue'
   import StructureComponent from '@/components/svgComponents/StructureComponent.vue';
 
-  export default defineComponent({
-    components: {
-    SimpleMenuBar,
-    SimpleSideBar,
-    SvgPanZoom,
-    StructureComponent
-  },
-  data() {
-    return {
-      viewBox: '0 0 2 2'
-    }
-  },
-    methods: {
-      scrollToElement() {
-        const elementoAlvo = document.getElementById('sas2d');
-        if (elementoAlvo) {
-          elementoAlvo.scrollIntoView({ behavior: 'smooth' });
-        }
-      },
-      handleSvgViewBox(vBox) {
-        //Change svg-pan-zoom viewBox according to child svg over the svg-viewbox event
-        this.viewBox = '0 0 ' + vBox;
-      }
-    },
-    mounted() {
-      this.scrollToElement();
+  import { ref, onMounted } from 'vue';
+
+  let viewBox = ref('0 0 2 2');
+
+  const handleSvgViewBox = (vBox) => {
+    viewBox.value = '0 0 ' + vBox;
+  }
+
+  onMounted(() => {
+    const elementoAlvo = document.getElementById('sas2d');
+    if (elementoAlvo) {
+      elementoAlvo.scrollIntoView({ behavior: 'smooth' });
     }
   })
+
 </script>
 
 <style scoped>

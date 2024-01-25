@@ -12,13 +12,7 @@
   </footer>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 import NavComponent from './components/NavComponent.vue';
 
-export default defineComponent({
-  components: {
-    NavComponent
-  }
-})
 </script>

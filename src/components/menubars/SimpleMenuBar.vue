@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import MenuButton from "./MenuButton.vue";
+import MenuButton from "./buttons/MenuButton.vue";
 
 export default {
     components: {
