@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-60">
-    <label class="block mt-0 pt-2 pb-2 text-sm font-medium">Points</label>
+  <div class="bg-gray-300 text-black rounded-bl rounded-br pt-0 mt-0 w-60">
+    <label class="block mt-0 pt-2 pb-2 text-base font-medium">Points</label>
 
     <div class="grid grid-cols-2 gap-y-0.5 items-center mb-2" >
       <label class="mr-2 w-20 m-auto" > Inital Point: </label>
@@ -39,13 +39,13 @@
       
     
     <div>
-      <label  class="block mb-2">
+      <label  class="block text-base mb-2">
         Loads
       </label>
 
       <div class="inline-flex items-center ml-5">
         <label class="mr-2 mb-2">Type: </label>
-        <SelectInput buttonClass="w-36  h-10" optionsClass="w-20">
+        <SelectInput buttonClass="w-40  h-16" optionsClass="w-20">
         
         </SelectInput>
       </div>
@@ -54,7 +54,7 @@
     </div>
     
 
-    <button type="button" @click="addBar" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
+    <button type="button" @click="addBar" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
   </div>
 </template>
 

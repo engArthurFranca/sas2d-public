@@ -1,6 +1,6 @@
 ﻿<template>
-    <li class="me-2 hover:bg-blue-600" ref="menuButton">
-        <a @click="setValue" class="relative inline-flex items-center justify-center p-2 border-b-2 border-transparent hover:border-gray-300 cursor-pointer group">
+    <li class="me-2 rounded-sm hover:bg-blue-600" ref="menuButton">
+        <a @click="setValue" class="relative inline-flex items-center justify-center p-2 border-transparent hover:border-gray-300 cursor-pointer group">
             {{ props.menuTitle }}
             <slot name="imgSlot"></slot>
         </a>

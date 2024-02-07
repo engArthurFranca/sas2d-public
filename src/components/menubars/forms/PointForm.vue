@@ -1,13 +1,13 @@
 ﻿<template>
-    <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-60">
-        <label class="block mt-0 pt-2 pb-2 text-sm font-medium">Coordinates</label>
+    <div class="bg-gray-300 text-black rounded-bl rounded-br pt-0 mt-0 w-60">
+        <label class="block mt-0 pt-2 pb-2 text-base font-medium">Coordinates</label>
 
         <NumberInput labelClass="w-8" label="X" :value="point.x" 
         @inputEvent="(newValue) => point.x = newValue" ></NumberInput>
         <NumberInput labelClass="w-8" label="Y" :value="point.y" 
             @inputEvent="(newValue) => point.y = newValue" ></NumberInput>
 
-        <label for="support" class="block m-2 text-sm font-medium">Support</label>
+        <label for="support" class="block m-2 text-base font-medium">Support</label>
 
         <div class="inline-flex mb-4">
             <SelectInput ref="selectSupport" buttonClass="w-14 h-14" optionsClass="grid grid-cols-2 gap-0 w-40">
@@ -41,19 +41,19 @@
             </label>
         </div>
         
-        <label  class="block mb-2"> Force </label>
+        <label  class="block text-base mb-2"> Force </label>
 
         <NumberInput labelClass="w-16" label="Value" :value="point.draw_loads[0][1]" 
             @inputEvent="(newValue) => point.draw_loads[0][1] = newValue"></NumberInput>
         <NumberInput labelClass="w-16" label="Angle" :value="point.draw_loads[0][2]" 
             @inputEvent="(newValue) => point.draw_loads[0][2] = newValue"></NumberInput>
 
-        <label  class="block mt-2 mb-2"> Bend </label>
+        <label  class="block mt-2 text-base mb-2"> Bend </label>
 
         <NumberInput labelClass="w-16" label="Angle" :value="point.draw_loads[1][1]" 
             @inputEvent="(newValue) => point.draw_loads[1][1] = newValue"></NumberInput>
 
-        <button type="button" @click="addPoint" class="bg-blue-500 text-white px-4 py-2 rounded m-4"> Add </button>
+        <button type="button" @click="addPoint" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
     </div>
 </template>
 

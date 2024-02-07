@@ -4,7 +4,7 @@
             <slot name="buttonSlot"></slot>
         </button>
 
-        <div v-show="isActive"  class="absolute -top-4 left-16 mt-2 w-auto h-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div v-show="isActive"  class="absolute z-10 -top-4 left-16 mt-2 w-auto h-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div :class="props.optionsClass" class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <slot name="options" ></slot>
             </div>

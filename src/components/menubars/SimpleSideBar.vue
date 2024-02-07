@@ -14,13 +14,13 @@
                         <path id="arrow-path" d="M 100 0, L 0 50, L 100 100" style="fill: rgba(55,65,81); stroke: rgb(102, 102, 102); stroke-width: 1px;"></path>
                     </svg>
                     <div class="absolute left-12 top-32  bg-gray-700 rounded-md">
-                        <h3 class="pt-2">New</h3>
+                        <h3 class="pt-2 text-white text-2xl">New</h3>
                         <div class="text-sm font-medium text-center border-b border-gray-200 text-gray-400">
-                            <ul class="inline-flex -mb-px">
-                                <li class="me-2" :class="{'text-blue-600 border-b-2 border-blue-600': isPoint}" @click="isPoint = true">
+                            <ul class="inline-flex mb-px">
+                                <li class="me-2" :class="{'text-white border-b-2 border-white': isPoint}" @click="isPoint = true">
                                     <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  hover:border-gray-300 hover:text-gray-300  cursor-pointer">Point</a>
                                 </li>
-                                <li class="me-2" :class="{'text-blue-600 border-b-2 border-blue-600': !isPoint}" @click="isPoint = false">
+                                <li class="me-2" :class="{'text-white border-b-2 border-white': !isPoint}"  @click="isPoint = false">
                                     <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  hover:border-gray-300 hover:text-gray-300 cursor-pointer">Bar</a>
                                 </li>
                             </ul>
@@ -43,22 +43,12 @@
                         <path id="arrow-path" d="M 100 0, L 0 50, L 100 100" style="fill: rgba(55,65,81); stroke: rgb(102, 102, 102); stroke-width: 1px;"></path>
                     </svg>
                     <div class="absolute left-12 top-40 w-36 bg-gray-700 rounded-md">
-                        <h3 class="pt-2">Grid</h3>
-                        <div class="bg-gray-500 rounded-bl rounded-br pt-0 mt-0 w-30">
-                            <label for="website-admin" class="block mt-0 pt-2 pb-2 text-sm font-medium">Spacing</label>
-                            <div class="flex mx-2">
-                                <span class="inline-flex w-8 items-center px-2 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                                    ΔX
-                                </span>
-                                <input type="number" v-model="grid.dx" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" >
-                            </div>
-
-                            <div class="flex mx-2">
-                                <span class="inline-flex w-8 items-center px-2 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
-                                    ΔY
-                                </span>
-                                <input type="number" v-model="grid.dy" id="website-admin" class=" h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" >
-                            </div>
+                        <h3 class="pt-2 text-base mb-1">Grid</h3>
+                        <div class="bg-gray-300 text-black rounded-bl rounded-br pt-0 mt-0 w-30">
+                            <label for="website-admin" class="block mt-0 pt-2 pb-2 text-base font-medium">Spacing</label>
+                            <NumberInput :label="'ΔX'" :value="grid.dx" @inputEvent="(newValue) => grid.dx = newValue"></NumberInput>
+                            <NumberInput :label="'ΔY'" :value="grid.dy" @inputEvent="(newValue) => grid.dy = newValue"></NumberInput>
+                            
                             <label class="block pb-2 mt-3 cursor-pointer">
                                 <input type="checkbox" v-model="grid.show" id="rot" name="rot" class="mr-2  cursor-pointer">
                                 Show Grid
@@ -87,8 +77,9 @@
     import PointForm from "./forms/PointForm.vue";
     import BarForm from "./forms/BarForm.vue";
     import MenuButton from "./buttons/MenuButton.vue";
+    import NumberInput from "./forms/inputs/NumberInput.vue";
 
-    import { ref, computed} from 'vue';
+    import { ref, computed } from 'vue';
     import { useStore } from "vuex";
 
 

@@ -1,12 +1,12 @@
 ﻿<template>
-    <div class="flex mx-2">
+    <div class="flex mx-2 my-1 border-transparent">
         <span 
             :class="props.labelClass"
-            class="inline-flex items-center px-3 text-sm  border rounded-bl rounded-tl rounded-s-md bg-gray-300 text-gray-900 border-gray-600">
+            class="inline-flex items-center px-3 text-sm rounded-bl rounded-tl rounded-s-md bg-gray-400 text-gray-900 ">
             {{ props.label }}
         </span>
         <input :value="props.value" type="number" @input="updateValue" 
-            class="h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  bg-gray-400 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" >
+            class="h-8 rounded-br rounded-tr rounded-e-lg border block flex-1 min-w-0 w-full text-sm p-2.5  placeholder-gray-600 text-black transition duration-500 ease-in-out transform border-transparent bg-gray-200  focus:border-blueGray-500 focus:bg-white" >
     </div>
 </template>
 
