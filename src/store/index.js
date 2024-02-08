@@ -4,11 +4,25 @@ export default createStore({
   state: {
     svgConfig: {
       grid: { dx: 1, dy: 1, show: true },
-      edit: { isEditing: false, isPoint: false, index: 0 }
+      edit: { isEditing: true, isPoint: true, index: 0 }
     },
     structure: {
       pointList: [],
-      barList: []
+      barList: [],
+      pointModel: {
+        x: 0,
+        y: 0,
+        rot: false,
+        support: 0,
+        draw_loads: [[1,0,0], [2,0,0]]
+      },
+      barModel: {
+        point_1: 0, 
+        point_2: 1, 
+        draw_loads: [[0,0]],
+        materials: [1,1,1],
+        rot: [false, false]
+      }
     }
   },
   getters: {
@@ -30,10 +44,18 @@ export default createStore({
   },
   mutations: {
 
-    addPoint(state, point) {
-      let copiedPoint = { ...point };
+    addPoint(state) {
+      let copiedPoint = { ...state.structure.pointModel };
 
-      state.structure.pointList.push(copiedPoint)
+      state.structure.pointList.push(copiedPoint);
+
+      state.structure.pointModel = {
+        x: 0,
+        y: 0,
+        rot: false,
+        support: 0,
+        draw_loads: [[1,0,0], [2,0,0]]
+      }
     },
 
     removePoint(state, pointIndex) {
@@ -45,10 +67,20 @@ export default createStore({
       });
     },
 
-    addBar(state, bar) {
-      let copiedBar = {...bar};
+    addBar(state) {
+      let copiedBar = {...state.structure.barModel};
       
-      state.structure.barList.push(copiedBar)
+      state.structure.barList.push(copiedBar);
+
+      state.structure.barModel = {
+        point_1: copiedBar.point_2, 
+        point_2: copiedBar.point_2 + 1 < state.structure.pointList.length?
+        0
+        : copiedBar.point_2 + 1, 
+        draw_loads: [[0,0]],
+        materials: [1,1,1],
+        rot: [false, false]
+      }
     },
 
     removeBar(state, barIndex) {

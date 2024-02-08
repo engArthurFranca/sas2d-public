@@ -1,5 +1,5 @@
 ﻿<template>
-    <div class="bg-gray-300 text-black rounded-bl rounded-br pt-0 mt-0 w-60">
+    <div class="bg-gray-300 text-black rounded-bl rounded-br pt-0 pb-2 mt-0 w-60">
         <label class="block mt-0 pt-2 pb-2 text-base font-medium">Coordinates</label>
 
         <NumberInput labelClass="w-8" label="X" :value="point.x" 
@@ -52,8 +52,9 @@
 
         <NumberInput labelClass="w-16" label="Angle" :value="point.draw_loads[1][1]" 
             @inputEvent="(newValue) => point.draw_loads[1][1] = newValue"></NumberInput>
+        
 
-        <button type="button" @click="addPoint" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
+        <button v-if="isNew" type="button" @click="addPoint" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
     </div>
 </template>
 
@@ -61,30 +62,25 @@
     import NumberInput from "./inputs/NumberInput.vue";
     import SelectInput from "./inputs/SelectInput.vue";
 
-    import { ref, defineEmits } from "vue";
+    import { ref, defineEmits, defineProps, computed } from "vue";
     import { useStore } from "vuex";
 
-    let point = ref({
-        x: 0,
-        y: 0,
-        rot: false,
-        support: 0,
-        draw_loads: [[1,0,0], [2,0,0]]
+    const props = defineProps({
+        index: Number
     });
-    const selectSupport = ref(null);
-
     const store = useStore();
     const emits = defineEmits(['close-menu'])
 
+    const isNew = props.index == null;
+
+    let point = isNew?
+    computed(() => store.state.structure.pointModel)
+    : computed(() => store.state.structure.pointList[props.index]);
+
+    const selectSupport = ref(null);
+
     const addPoint = () => {
-        store.commit( 'addPoint', point.value );
-        point.value = {
-            x: 0,
-            y: 0,
-            rot: false,
-            support: 0,
-            draw_loads: [[1,0,0], [2,0,0]]
-        };
+        store.commit( 'addPoint' );
         selectSupport.value.closeSelect();
         emits('close-menu');
     };
@@ -95,9 +91,3 @@
     };
 
 </script>
-
-<style scoped>
-    .NumberInput span {
-        width: 20px;
-    }
-</style>

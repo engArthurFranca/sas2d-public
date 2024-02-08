@@ -43,7 +43,7 @@
         Loads
       </label>
 
-      <div class="inline-flex items-center ml-5">
+      <div class="mb-2 inline-flex items-center ml-5">
         <label class="mr-2 mb-2">Type: </label>
         <SelectInput buttonClass="w-40  h-16" optionsClass="w-20">
         
@@ -54,7 +54,7 @@
     </div>
     
 
-    <button type="button" @click="addBar" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
+    <button v-if="isNew" type="button" @click="addBar" class="bg-blue-700 text-white px-4 py-2 rounded m-4"> Add </button>
   </div>
 </template>
 
@@ -62,31 +62,27 @@
   import NumberInput from "./inputs/NumberInput.vue";
   import SelectInput from "./inputs/SelectInput.vue";
 
-  import { ref, defineEmits } from "vue";
+  import { computed, defineEmits, defineProps } from "vue";
   import { useStore } from "vuex";
-
-  let bar = ref({
-    point_1: 0, 
-    point_2: 1, 
-    draw_loads: [[0,0]],
-    materials: [1,1,1],
-    rot: [false, false]
-  });
 
   const store = useStore();
   const emits = defineEmits(['close-menu']);
+  const props = defineProps({
+    index: Number
+  });
+  const isNew = props.index == null;
+
+  let bar = isNew?
+  computed(() => store.state.structure.barModel)
+  : computed(() => store.state.structure.barList[props.index])
+  ;
+
+  
 
   const pointList = store.state.structure.pointList;
 
   const addBar = () => {
-    store.commit( 'addBar', bar.value );
-    bar.value = {
-      point_1: 0, 
-      point_2: 1, 
-      draw_loads: [[0,0]],
-      materials: [1,1,1],
-      rot: [false, false]
-    };
+    store.commit( 'addBar' );
     emits('close-menu');
   }
 </script>
