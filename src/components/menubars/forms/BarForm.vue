@@ -70,14 +70,13 @@
   const props = defineProps({
     index: Number
   });
+
   const isNew = props.index == null;
 
   let bar = isNew?
   computed(() => store.state.structure.barModel)
   : computed(() => store.state.structure.barList[props.index])
   ;
-
-  
 
   const pointList = store.state.structure.pointList;
 

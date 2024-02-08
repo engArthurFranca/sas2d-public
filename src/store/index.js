@@ -4,7 +4,7 @@ export default createStore({
   state: {
     svgConfig: {
       grid: { dx: 1, dy: 1, show: true },
-      edit: { isEditing: true, isPoint: true, index: 0 }
+      edit: { isEditing: false, isPoint: true, index: 0 }
     },
     structure: {
       pointList: [],

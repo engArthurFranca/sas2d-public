@@ -57,28 +57,40 @@
                     </div>
                 </template>
             </MenuButton>
+            
+            <div class="border-t-2" v-show="svgConfig.edit.isEditing">
+                <MenuButton>
+                    <template v-slot:imgSlot>
+                        <div class="flex flex-col w-5">
+                            <img src="../../assets/buttons/editButton.svg">
+                            <a class="w-6 -ml-1">Edit</a>
+                        </div>
+                    </template>
+                    <template v-slot:submenuSlot>
+                        <svg class="absolute left-10 top-5 w-2 h-2" id="arrow" viewBox="0 0 100 100" preserveAspectRatio="none" data-align="right">
+                            <path id="arrow-path" d="M 100 0, L 0 50, L 100 100" style="fill: rgba(55,65,81); stroke: rgb(102, 102, 102); stroke-width: 1px;"></path>
+                        </svg>
+                        <div v-if="svgConfig.edit.isPoint" @click.stop="" class="absolute left-12 top-0  bg-gray-700 rounded-md">
+                            <h3 class="pt-2 pb-2 text-white text-2xl">Point {{ svgConfig.edit.index + 1 }}</h3>
+                            <PointForm :index="svgConfig.edit.index" @close-menu="closeEvent"></PointForm>
+                        </div>
+                        <div v-else class="absolute left-12 top-0  bg-gray-700 rounded-md">
+                            <h3 class="pt-2 pb-2 text-white text-2xl">Bar {{ svgConfig.edit.index + 1 }}</h3>
+                            <BarForm :index="svgConfig.edit.index" @close-menu="closeEvent"></BarForm>
+                        </div>
+                    </template>
+                </MenuButton>
 
-            <MenuButton v-show="svgConfig.edit.isEditing" >
-                <template v-slot:imgSlot>
-                    <div class="flex flex-col w-5">
-                        <img src="../../assets/buttons/editButton.svg">
-                        <a class="w-6 -ml-1">Edit</a>
-                    </div>
-                </template>
-                <template v-slot:submenuSlot>
-                    <svg class="absolute left-10 top-5 w-2 h-2" id="arrow" viewBox="0 0 100 100" preserveAspectRatio="none" data-align="right">
-                        <path id="arrow-path" d="M 100 0, L 0 50, L 100 100" style="fill: rgba(55,65,81); stroke: rgb(102, 102, 102); stroke-width: 1px;"></path>
-                    </svg>
-                    <div v-if="svgConfig.edit.isPoint" @click.stop="" class="absolute left-12 top-0  bg-gray-700 rounded-md">
-                        <h3 class="pt-2 pb-2 text-white text-2xl">Point {{ svgConfig.edit.index + 1 }}</h3>
-                        <PointForm :index="svgConfig.edit.index" @close-menu="closeEvent"></PointForm>
-                    </div>
-                    <div v-else class="absolute left-12 top-0  bg-gray-700 rounded-md">
-                        <h3 class="pt-2 pb-2 text-white text-2xl">Bar {{ svgConfig.edit.index + 1 }}</h3>
-                        <BarForm :index="svgConfig.edit.index" @close-menu="closeEvent"></BarForm>
-                    </div>
-                </template>
-            </MenuButton>
+                <MenuButton @click="removeElement">
+                    <template v-slot:imgSlot>
+                        <div class="flex flex-col w-5">
+                            <img src="../../assets/buttons/removeButton.svg">
+                            <a class="w-6 -ml-2 text-xs ">Delete</a>
+                        </div>
+                    </template>
+                </MenuButton>
+            </div>
+            
         </ul>
 </nav>
 </template>
@@ -103,4 +115,13 @@
     const grid = computed(() =>
         store.state.svgConfig.grid
     );
+
+    function removeElement() {
+        if ( svgConfig.edit.isPoint ) {
+            store.commit( 'removePoint', svgConfig.edit.index )
+        } else {
+            store.commit( 'removeBar', svgConfig.edit.index )
+        }
+        svgConfig.edit.isEditing = false
+    }
 </script>

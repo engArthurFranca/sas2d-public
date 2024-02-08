@@ -17,61 +17,49 @@
     </g>
 </template>
 
-<script>
-import { defineComponent, computed } from 'vue';
-import { useStore } from 'vuex';
+<script setup>
+    import { computed, ref, defineProps, watchEffect } from 'vue';
+    import { useStore } from 'vuex';
 
-import LoadPointComponent from './LoadPointComponent.vue';
+    import LoadPointComponent from './LoadPointComponent.vue';
 
-export default defineComponent({
-    data() {
-        return {
-            color: 'black'
-        }
-    },
-    props: {
+    const store = useStore();
+    const props = defineProps({ 
         scale: Number,
         pointIndex: Number
-    },
-    methods: { 
-        focusElement() {
-            this.color = 'red';
-            this.$store.state.svgConfig.edit.isEditing = true;
-            this.$store.state.svgConfig.edit.isPoint = true;
-            this.$store.state.svgConfig.edit.index = this.pointIndex;
-            window.addEventListener('click', this.handleOutClick);
-        },
+    });
 
-        handleOutClick() {
-            this.color = 'black';
-            this.$store.state.svgConfig.edit.isEditing = false;
-            window.removeEventListener('click', this.handleClick);
-        }
-    },
-    watch: {
-        
-    },
-    components: {
-        LoadPointComponent
-    },
-    setup(props) {
-        const store = useStore();
-        const point = computed(() => {
-            return store.state.structure.pointList[props.pointIndex]
-        });
-        const svg = computed(() => {
-            return {
-                x: point.value.x - props.scale/2,
-                y: point.value.y - props.scale/2
-            }
-        });
-
+    const point = computed(() => {
+        return store.state.structure.pointList[props.pointIndex]
+    });
+    const svg = computed(() => {
         return {
-            svg,
-            point
-        };
+            x: point.value.x - props.scale/2,
+            y: point.value.y - props.scale/2
+        }
+    });
+
+    let editIndex = computed(() => {
+        return store.state.svgConfig.edit.index
+    });
+
+    let color = ref('black');
+
+    function focusElement() {
+        store.state.svgConfig.edit.isEditing = true;
+        store.state.svgConfig.edit.isPoint = true;
+        store.state.svgConfig.edit.index = props.pointIndex;
     }
-})
+
+    watchEffect(() => {
+        if (store.state.svgConfig.edit.isEditing && store.state.svgConfig.edit.isPoint && (editIndex.value == props.pointIndex)) {
+            color.value = 'red';
+        } else {
+            color.value = 'black';
+        }
+    });
+
+
 </script>
 
 <style scoped>
