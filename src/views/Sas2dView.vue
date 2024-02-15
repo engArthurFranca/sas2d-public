@@ -1,12 +1,14 @@
 ﻿<template>
-  <div class="sas2d" id="sas2d" @wheel.y.prevent="">
+  <div class="sas2d relative caret-pink-500 select-none" id="sas2d" @wheel.y.prevent="">
     <SimpleMenuBar class="menuBar"></SimpleMenuBar>
     <SimpleSideBar class="sideBar"></SimpleSideBar>
-    <div class="mainFrame">
+    <div class="mainFrame relative">
       <SvgPanZoom :vBox="viewBox" style="max-height: 80%; max-width: 80%;">
         <StructureComponent @svg-viewbox="handleSvgViewBox"></StructureComponent>
       </SvgPanZoom>
+      <DataShowComponent></DataShowComponent>
     </div>
+    <AlertHolder></AlertHolder>
   </div>
 </template>
 
@@ -15,8 +17,12 @@
   import SimpleSideBar from '@/components/menubars/SimpleSideBar.vue';
   import SvgPanZoom from '@/components/svgComponents/SvgPanZoom.vue'
   import StructureComponent from '@/components/svgComponents/StructureComponent.vue';
-
+  import AlertHolder from '@/components/AlertHolder.vue';
+  import DataShowComponent from '@/components/menubars/DataShowComponent.vue';
+  
   import { ref, onMounted } from 'vue';
+  import { useStore } from 'vuex';
+  
 
   let viewBox = ref('0 0 2 2');
 
@@ -25,10 +31,8 @@
   }
 
   onMounted(() => {
-    const elementoAlvo = document.getElementById('sas2d');
-    if (elementoAlvo) {
-      elementoAlvo.scrollIntoView({ behavior: 'smooth' });
-    }
+    const store = useStore();
+    store.commit('newAlert', {isYellow: true, title: 'Tips', msg: `Start by clicking 'New' and add a new Point`});
   })
 
 </script>

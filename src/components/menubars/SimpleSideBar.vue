@@ -20,7 +20,8 @@
                                 <li class="me-2" :class="{'text-white border-b-2 border-white': isPoint}" @click="isPoint = true">
                                     <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  hover:border-gray-300 hover:text-gray-300  cursor-pointer">Point</a>
                                 </li>
-                                <li class="me-2" :class="{'text-white border-b-2 border-white': !isPoint}"  @click="isPoint = false">
+                                <li class="me-2" :class="{'text-white border-b-2 border-white': !isPoint}"  
+                                    @click="showBarForm">
                                     <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  hover:border-gray-300 hover:text-gray-300 cursor-pointer">Bar</a>
                                 </li>
                             </ul>
@@ -59,7 +60,7 @@
             </MenuButton>
             
             <div class="border-t-2" v-show="svgConfig.edit.isEditing">
-                <MenuButton>
+                <MenuButton id="editButton">
                     <template v-slot:imgSlot>
                         <div class="flex flex-col w-5">
                             <img src="../../assets/buttons/editButton.svg">
@@ -70,7 +71,7 @@
                         <svg class="absolute left-10 top-5 w-2 h-2" id="arrow" viewBox="0 0 100 100" preserveAspectRatio="none" data-align="right">
                             <path id="arrow-path" d="M 100 0, L 0 50, L 100 100" style="fill: rgba(55,65,81); stroke: rgb(102, 102, 102); stroke-width: 1px;"></path>
                         </svg>
-                        <div v-if="svgConfig.edit.isPoint" @click.stop="" class="absolute left-12 top-0  bg-gray-700 rounded-md">
+                        <div v-if="svgConfig.edit.isPoint" class="absolute left-12 top-0  bg-gray-700 rounded-md">
                             <h3 class="pt-2 pb-2 text-white text-2xl">Point {{ svgConfig.edit.index + 1 }}</h3>
                             <PointForm :index="svgConfig.edit.index" @close-menu="closeEvent"></PointForm>
                         </div>
@@ -111,10 +112,13 @@
     const menuAdd = ref(null);
 
     const store = useStore();
+
     const svgConfig = store.state.svgConfig;
     const grid = computed(() =>
         store.state.svgConfig.grid
     );
+
+    const pointList = store.state.structure.pointList;
 
     function removeElement() {
         if ( svgConfig.edit.isPoint ) {
@@ -123,5 +127,14 @@
             store.commit( 'removeBar', svgConfig.edit.index )
         }
         svgConfig.edit.isEditing = false
+    }
+
+    function showBarForm() {
+        if (pointList.length >= 2) {
+            isPoint.value = false;
+        } else {
+            isPoint.value = true;
+            store.commit('newAlert', {isYellow: true, title: '', msg: 'You need at least 2 Points before creating a Bar Element!' } )
+        }
     }
 </script>

@@ -61,20 +61,6 @@
         }
     });
 
-    //funções para manipular matrizes
-
-    // function matMul(a,b) { 
-    //     return math.multiply(a,b);
-    // }
-
-    // function matInv(a) {
-    //     return math.inv(a);
-    // }
-
-    // function matTranspose(a) {
-    //     return math.transpose(a);
-    // }
-
 </script>
 
 <style scoped>

@@ -13,7 +13,7 @@
             <polygon points="0 0, 5 2.5, 0 5" stroke="blue" fill="blue"/>
         </marker>
         <filter x="0" y="0" width="1" height="1" id="textBackground">
-            <feFlood flood-color="rgba(255,255,255, 0.75)" result="bg" />
+            <feFlood flood-color="rgba(255,255,255, 0.45)" result="bg" />
             <feMerge>
                 <feMergeNode in="bg"/>
                 <feMergeNode in="SourceGraphic"/>
