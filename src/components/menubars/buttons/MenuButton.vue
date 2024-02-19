@@ -1,35 +1,34 @@
 ﻿<template>
-    <li class="relative me-2 rounded-sm hover:bg-blue-600" ref="menuButton">
-        <a @click="setValue" class="inline-flex items-center justify-center p-2 border-transparent hover:border-gray-300 cursor-pointer group">
+    <li class="relative me-2 rounded-sm hover:bg-blue-600" id="menuButton">
+        <a @click.stop="trigger" class="inline-flex items-center justify-center p-2 border-transparent hover:border-gray-300 cursor-pointer group">
             {{ props.menuTitle }}
             <slot name="imgSlot"></slot>
         </a>
-        <MenuModel v-if="displayMenu" @close-menu="closeMenu" :menuRef="menuButton">
+        <div v-if="isActive" @click.stop="" id="menuDiv">
             <slot name="submenuSlot"></slot>
-        </MenuModel>
+        </div>
     </li>
 </template>
 
 <script setup>
-    import MenuModel from './MenuModel.vue';
+    import useTrigger from '@/composable/useTrigger';
     
-    import { ref, defineProps, defineExpose } from 'vue';
-
-
-    const menuButton = ref(null);
-    let displayMenu = ref(false);
+    import { defineProps, defineExpose } from 'vue';
 
     const props = defineProps({
-        menuTitle: String
+        menuTitle: String,
+        preventDefault: {type: Boolean, default: false }
     });
 
-    const setValue = () => {
-        displayMenu.value = !displayMenu.value;
-    };
+    const { isActive, trigger } = useTrigger({
+        idList: ['menuButton', 'menuDiv'],
+        unTriggerFunc: closeMenu,
+        preventUntrigger: props.preventDefault
+    })
 
-    const closeMenu = () => {
-        displayMenu.value = false;
-    };
+    function closeMenu() {
+        isActive.value = false;
+    }
 
     defineExpose({ closeMenu });
 

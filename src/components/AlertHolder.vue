@@ -6,7 +6,7 @@
                 class="flex-wrap border mb-1 px-4 py-3 rounded relative"
             >
                 <span class="absolute -top-3 bottom-0 -right-4 px-4 py-3">
-                    <svg 
+                    <svg
                         :class="[ alert.isYellow? 'text-yellow-500': 'text-red-500' ]"
                         class="fill-current h-6 w-6" 
                         @click="closeAlert(alert.id)"

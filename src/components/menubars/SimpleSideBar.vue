@@ -60,7 +60,7 @@
             </MenuButton>
             
             <div class="border-t-2" v-show="svgConfig.edit.isEditing">
-                <MenuButton id="editButton">
+                <MenuButton id="editButton" :preventDefault="true" >
                     <template v-slot:imgSlot>
                         <div class="flex flex-col w-5">
                             <img src="../../assets/buttons/editButton.svg">
